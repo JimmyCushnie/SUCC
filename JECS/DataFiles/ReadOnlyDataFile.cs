@@ -1,4 +1,5 @@
 ﻿using JECS.Abstractions;
+using JECS.UnityStuff;
 using System;
 using System.IO;
 using System.Timers;
@@ -10,6 +11,19 @@ namespace JECS
     /// </summary>
     public class ReadOnlyDataFile : ReadableDataFile, IDataFileOnDisk
     {
+        /// <summary>
+        /// Creates a new <see cref="ReadOnlyDataFile"/> object, using a text file in Unity's Resources folder for the default file text.
+        /// </summary>
+        /// <param name="path"> The path of the file. Can be either absolute or relative to the default path. </param>
+        /// <param name="defaultFile"> The path of the default file, relative to any Resources parent. </param>
+        /// <returns></returns>
+        public static ReadOnlyDataFile WithDefaultFile(string path, string defaultFile)
+        {
+            string defaultFileText = ResourcesUtilities.ReadTextFromFile(defaultFile);
+            return new ReadOnlyDataFile(path, defaultFileText);
+        }
+
+
         /// <summary>
         /// Creates a new ReadOnlyDataFile object corresponding to a JECS file in system storage.
         /// </summary>
