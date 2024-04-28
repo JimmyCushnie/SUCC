@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using UnityEngine;
 
 namespace JECS
 {
@@ -13,7 +14,7 @@ namespace JECS
         private static string _DefaultPath = GetDefaultDefaultPath();
 
         /// <summary>
-        /// The path that DataFile locations will be relative to if you assign them a non-absolute path. By default this is System.AppContext.BaseDirectory, but you can change it if you like.
+        /// The path that DataFile locations will be relative to if you assign them a non-absolute path. By default this is the same folder your game executable is in, or [project folder]/Game/ in the editor. You can change it if you like.
         /// </summary>
         public static string DefaultPath
         {
@@ -28,7 +29,15 @@ namespace JECS
 
         private static string GetDefaultDefaultPath()
         {
-            return System.AppContext.BaseDirectory;
+            // https://docs.unity3d.com/ScriptReference/Application-dataPath.html
+#if UNITY_EDITOR
+            string ProjectFolder = new DirectoryInfo(Application.dataPath).Parent.FullName;
+            return Path.Combine(ProjectFolder, "Game");
+#elif UNITY_STANDALONE_OSX
+            return new DirectoryInfo(Application.dataPath).Parent.Parent.FullName;
+#else
+            return new DirectoryInfo(Application.dataPath).Parent.FullName;
+#endif
         }
 
         /// <summary> All JECS files have this file extension. </summary>
