@@ -1,0 +1,13 @@
+{
+  "name": "com.jimmycushnie.jecs",
+  "displayName": "JECS",
+  "version": "1.0.0",
+  "unity": "2019.4",
+  "description": "Jimmy's Epic Config System",
+  "keywords": [
+    "config",
+    "file",
+    "data"
+  ],
+  "type": "library"
+}
